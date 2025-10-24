@@ -20,7 +20,6 @@ class MedicalApp extends StatelessWidget {
       title: 'App Medica',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
         scaffoldBackgroundColor: Colors.white, // Fondo blanco global
       ),
       home: MedicalAppointmentsPage(),
