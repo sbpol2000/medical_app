@@ -1,12 +1,12 @@
 import 'package:go_router/go_router.dart';
 import 'package:medical_app/app/constants/routes.dart';
 import 'package:medical_app/app/services/navigate_service.dart';
-import 'package:medical_app/features/appointments/RegistroCita.dart';
+import 'package:medical_app/features/appointments/views/RegistroCita.dart';
 import 'package:medical_app/features/auth/views/login.dart';
 import 'package:medical_app/features/auth/views/register.dart';
-import 'package:medical_app/features/chat/ChatPage.dart';
-import 'package:medical_app/features/dashboard/DashboardPage.dart';
-import 'package:medical_app/features/onboarding/onboardingPage.dart';
+import 'package:medical_app/features/chat/views/ChatPage.dart';
+import 'package:medical_app/features/dashboard/views/DashboardPage.dart';
+import 'package:medical_app/features/onboarding/views/onboardingPage.dart';
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: NavigateService.navigatorKey,

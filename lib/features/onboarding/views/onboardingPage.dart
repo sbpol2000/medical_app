@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/app/constants/colors.dart';
 import 'package:medical_app/app/constants/navigate.dart';
-import 'onboarding_carousel.dart';
+import '../widgets/onboarding_carousel.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);
