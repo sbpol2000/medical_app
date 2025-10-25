@@ -6,12 +6,9 @@ import 'package:medical_app/features/chat/ChatPage.dart';
 import 'package:medical_app/features/onboarding/onboardingPage.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/',
   routes: [
-    GoRoute(
-      path: '/onboarding',
-      builder: (context, state) => const OnboardingPage(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const OnboardingPage()),
     GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
     GoRoute(
       path: '/register',

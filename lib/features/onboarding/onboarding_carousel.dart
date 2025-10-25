@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/app/constants/colors.dart';
 
 class OnboardingCarousel extends StatefulWidget {
   const OnboardingCarousel({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: 400,
+          height: 600,
           child: PageView.builder(
             controller: _controller,
             itemCount: _pages.length,
@@ -47,23 +48,36 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
             itemBuilder: (context, index) {
               final page = _pages[index];
               return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(page['image']!, height: 200),
-                  const SizedBox(height: 40),
-                  Text(
-                    page['title']!,
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
+                  Image.asset(
+                    page['image']!,
+                    height: 300,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    page['desc']!,
-                    style: const TextStyle(fontSize: 20),
-                    textAlign: TextAlign.center,
+                  const SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          page['title']!,
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          page['desc']!,
+                          style: const TextStyle(fontSize: 20),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 18),
+                      ],
+                    ),
                   ),
                 ],
               );
@@ -82,7 +96,7 @@ class _OnboardingCarouselState extends State<OnboardingCarousel> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: _currentPage == index
-                    ? Theme.of(context).primaryColor
+                    ? colorBlue
                     : Colors.grey[300],
               ),
             ),

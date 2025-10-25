@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/app/constants/colors.dart';
 import 'onboarding_carousel.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -39,12 +40,7 @@ class OnboardingPage extends StatelessWidget {
                     // Aquí puedes navegar a la pantalla principal o de login
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(
-                      0,
-                      122,
-                      255,
-                      100,
-                    ), // Color azul
+                    backgroundColor: colorBlue, // Color azul
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                         12,
