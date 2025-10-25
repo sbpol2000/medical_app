@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:medical_app/app/constants/colors.dart';
 import 'package:medical_app/app/constants/navigate.dart';
 
 class LoginPage extends StatefulWidget {
@@ -40,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       // autentificacion
       await Future.delayed(const Duration(seconds: 1));
       if (!mounted) return;
+      NavigateTo.dashboard();
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Inicio de sesión exitoso')));
@@ -212,12 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: ElevatedButton(
                               onPressed: _loading ? null : _submit,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color.fromRGBO(
-                                  0,
-                                  122,
-                                  255,
-                                  100,
-                                ),
+                                backgroundColor: colorBlue,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -261,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                                     text: 'Registrate',
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: Color.fromRGBO(0, 122, 255, 100),
+                                      color: colorBlue,
                                     ),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = _loading

@@ -5,4 +5,5 @@ class AppRoutes {
   static String chat = '/chat';
   static String register = '/register';
   static String appointments = '/appointments';
+  static String dashboard = '/dashboard';
 }

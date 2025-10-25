@@ -5,6 +5,7 @@ import 'package:medical_app/features/appointments/RegistroCita.dart';
 import 'package:medical_app/features/auth/views/login.dart';
 import 'package:medical_app/features/auth/views/register.dart';
 import 'package:medical_app/features/chat/ChatPage.dart';
+import 'package:medical_app/features/dashboard/DashboardPage.dart';
 import 'package:medical_app/features/onboarding/onboardingPage.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -30,6 +31,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.appointments,
       builder: (context, state) => const MedicalAppointmentsPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.dashboard,
+      builder: (context, state) => const DashboardPage(),
     ),
   ],
 );

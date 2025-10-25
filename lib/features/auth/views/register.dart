@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:medical_app/app/constants/colors.dart';
 import 'package:medical_app/app/constants/navigate.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -236,7 +237,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: ElevatedButton(
                           onPressed: _loading ? null : _submit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromRGBO(0, 122, 255, 100),
+                            backgroundColor: colorBlue,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -280,7 +281,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 text: 'Inicia sesión',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Color.fromRGBO(0, 122, 255, 100),
+                                  color: colorBlue,
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = _loading

@@ -12,4 +12,13 @@ class NavigateTo {
   static void register() {
     NavigateService.navigatorKey.currentContext?.go(AppRoutes.register);
   }
+  static void chat() {
+    NavigateService.navigatorKey.currentContext?.go(AppRoutes.chat);
+  }
+  static void appointments() {
+    NavigateService.navigatorKey.currentContext?.go(AppRoutes.appointments);
+  }
+  static void dashboard() {
+    NavigateService.navigatorKey.currentContext?.go(AppRoutes.dashboard);
+  }
 }
