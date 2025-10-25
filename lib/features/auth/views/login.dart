@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:medical_app/app/constants/navigate.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -266,7 +267,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ..onTap = _loading
                                           ? null
                                           : () {
-                                              // navegar a register
+                                              NavigateTo.register();
                                             },
                                   ),
                                 ],
