@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/onboarding/onboardingPage.dart';
-import 'features/auth/login.dart';
-import 'features/auth/register.dart';
-import 'features/auth/register.dart';
-import 'features/chat/ChatPage.dart';
-import 'features/appointments/RegistroCita.dart';
+import 'package:medical_app/app/router/app_router.dart';
 
 void main() {
   runApp(const MedicalApp());
@@ -16,13 +11,13 @@ class MedicalApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'App Medica',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white, // Fondo blanco global
       ),
-      home: MedicalAppointmentsPage(),
+      routerConfig: appRouter,
     );
   }
 }
