@@ -10,7 +10,7 @@ import 'package:medical_app/features/onboarding/views/onboardingPage.dart';
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: NavigateService.navigatorKey,
-  initialLocation: AppRoutes.onboarding,
+  initialLocation: AppRoutes.dashboard,
   routes: [
     GoRoute(
       path: AppRoutes.onboarding,

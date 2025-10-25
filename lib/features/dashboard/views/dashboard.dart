@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/app/constants/colors.dart';
 import 'package:medical_app/features/dashboard/widgets/card_action.dart';
+import 'package:medical_app/features/dashboard/widgets/section.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  const Dashboard({super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -50,6 +51,7 @@ class _DashboardState extends State<Dashboard> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Row(
               children: [
@@ -58,9 +60,19 @@ class _DashboardState extends State<Dashboard> {
               ],
             ),
             SizedBox(height: 16),
-            Column(children: [
-               
-              ],
+            Section(
+              title: 'Próximas Citas',
+              content: Text('Aquí van las próximas citas del usuario'),
+            ),
+            SizedBox(height: 16),
+            Section(
+              title: 'Medicación de Hoy',
+              content: Text('Aquí van las próximas citas del usuario'),
+            ),
+            SizedBox(height: 16),
+            Section(
+              title: 'Historial Reciente',
+              content: Text('Aquí van las próximas citas del usuario'),
             ),
           ],
         ),
