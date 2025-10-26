@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medical_app/app/constants/colors.dart';
 import 'package:medical_app/features/dashboard/widgets/card_action.dart';
 import 'package:medical_app/features/dashboard/widgets/section.dart';
+import 'package:medical_app/features/dashboard/widgets/today_medication.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -67,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
             SizedBox(height: 16),
             Section(
               title: 'Medicación de Hoy',
-              content: Text('Aquí van las próximas citas del usuario'),
+              content: TodayMedication(),
             ),
             SizedBox(height: 16),
             Section(
