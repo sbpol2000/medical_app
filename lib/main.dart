@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/app/router/app_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:medical_app/app/constants/configurations.dart';
 
-void main() {
+// void main() {
+//   runApp(const MedicalApp());
+// }
+
+Future<void> main() async {
+  await Supabase.initialize(
+    url: Configurations.supabaseUrl,
+    anonKey: Configurations.supabaseAnonKey,
+  );
   runApp(const MedicalApp());
 }
 
