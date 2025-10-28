@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:medical_app/app/constants/colors.dart';
 import 'package:medical_app/app/constants/navigate.dart';
+import 'package:medical_app/features/auth/auth_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,6 +21,9 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _obscure = true;
   bool _loading = false;
+  String? _errorMessage;
+
+  final _authRepository = AuthRepository(Supabase.instance.client);
 
   @override
   void dispose() {
@@ -35,21 +40,60 @@ class _LoginPageState extends State<LoginPage> {
 
     if (!form.validate()) return;
 
-    setState(() => _loading = true);
+    setState(() {
+      _loading = true;
+      _errorMessage = null;
+    });
     //manejo de errores
+    // try {
+    //   // autentificacion
+    //   await Future.delayed(const Duration(seconds: 1));
+    //   if (!mounted) return;
+    //   NavigateTo.dashboard();
+    //   ScaffoldMessenger.of(
+    //     context,
+    //   ).showSnackBar(const SnackBar(content: Text('Inicio de sesión exitoso')));
+    // } catch (e) {
+    //   if (!mounted) return;
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text('No se pudo iniciar sesión')),
+    //   );
+    // } finally {
+    //   if (mounted) setState(() => _loading = false);
+    // }
+
     try {
-      // autentificacion
-      await Future.delayed(const Duration(seconds: 1));
-      if (!mounted) return;
+      final res = await _authRepository.signInWithEmail(
+        email: _emailCtrl.text.trim(),
+        password: _passCtrl.text.trim(),
+      );
+      if (res.session == null || res.user == null) {
+        // Muy raro si no lanzó excepción, pero por si acaso:
+        throw const AuthException(
+          'No se pudo iniciar sesión, intenta de nuevo.',
+        );
+      }
+      // Si llegó aquí sin lanzar AuthException, el login fue correcto
+      // (res.session suele venir no-nulo en éxito con password)
       NavigateTo.dashboard();
+      if (!mounted) return;
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Inicio de sesión exitoso')));
-    } catch (e) {
+    } on AuthException catch (e) {
+      // Errores de autenticación (credenciales inválidas, etc.)
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No se pudo iniciar sesión')),
-      );
+      setState(() => _errorMessage = e.message);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+    } catch (e) {
+      // Otros errores inesperados
+      if (!mounted) return;
+      setState(() => _errorMessage = 'Ocurrió un error inesperado');
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
     } finally {
       if (mounted) setState(() => _loading = false);
     }

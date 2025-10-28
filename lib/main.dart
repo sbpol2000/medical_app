@@ -8,6 +8,7 @@ import 'package:medical_app/app/constants/configurations.dart';
 // }
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
     url: Configurations.supabaseUrl,
     anonKey: Configurations.supabaseAnonKey,

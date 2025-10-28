@@ -7,10 +7,32 @@ import 'package:medical_app/features/auth/views/register.dart';
 import 'package:medical_app/features/chat/views/ChatPage.dart';
 import 'package:medical_app/features/dashboard/views/dashboard.dart';
 import 'package:medical_app/features/onboarding/views/onboardingPage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: NavigateService.navigatorKey,
   initialLocation: AppRoutes.dashboard,
+  redirect: (context, state) {
+    // Obtener la sesión de Supabase
+    final session = Supabase.instance.client.auth.currentSession;
+
+    // Si el usuario no está autenticado y está intentando acceder a rutas protegidas
+    final isLoggingIn =
+        state.uri.toString() == AppRoutes.login ||
+        state.uri.toString() == AppRoutes.register;
+
+    if (session == null && !isLoggingIn) {
+      // Redirigir al login si no está autenticado y no está en las rutas de login/register
+      return AppRoutes.login;
+    }
+
+    // Si el usuario está autenticado y está intentando ir a Login/Register, redirigir al Dashboard
+    if (session != null && isLoggingIn) {
+      return AppRoutes.dashboard;
+    }
+
+    return null; // Si no hay redirección, mantener la ruta actual
+  },
   routes: [
     GoRoute(
       path: AppRoutes.onboarding,
