@@ -72,73 +72,56 @@ class _RegisterPageState extends State<RegisterPage> {
 
     setState(() => _loading = true);
     _errorMessage = null;
-
-    // try {
-    //   // reemplazar por la llamada al registro real
-
-    //   await Future.delayed(const Duration(seconds: 1));
-
-    //   if (!mounted) return;
-    //   ScaffoldMessenger.of(
-    //     context,
-    //   ).showSnackBar(const SnackBar(content: Text('Registro exitoso')));
-
-    //   //  navegar a login
-    // } catch (e) {
-    //   if (!mounted) return;
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('No se pudo completar el registro')),
-    //   );
-    // } finally {
-    //   if (mounted) setState(() => _loading = false);
-    // }
     try {
-      // Registro en Supabase
-      await _authRepository.signUpWithEmail(
+      // Registro en Supabase con metadata
+      // El trigger automáticamente creará el perfil
+      final response = await _authRepository.signUpWithEmail(
         email: _emailCtrl.text.trim(),
         password: _passCtrl.text.trim(),
+        metadata: {'name': _nameCtrl.text.trim()},
       );
 
-      // Si la respuesta es exitosa, guardar en la tabla 'profiles'
-      final user = Supabase.instance.client.auth.currentUser;
-      final profileResponse = await Supabase.instance.client
-          .from('profiles')
-          .upsert([
-            {
-              'id': user?.id, // Usa el 'id' del usuario de auth.users
-              'name': _nameCtrl.text.trim(),
-              'email': _emailCtrl.text.trim(),
-            },
-          ]);
-
-      if (profileResponse.error != null) {
-        setState(() {
-          _errorMessage = 'Hubo un error al guardar el perfil';
-        });
-      } else {
-        // Si se guarda correctamente, redirigir al login
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Registro exitoso. Revisa tu correo.')),
-        );
-        NavigateTo.login();
+      // Verificar si el usuario fue creado
+      if (response.user == null) {
+        throw Exception('No se pudo crear el usuario');
       }
+
+      if (!mounted) return;
+
+      // Mostrar mensaje de éxito
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Registro exitoso. Revisa tu correo para confirmar.'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      // Redirigir al login
+      NavigateTo.login();
     } on AuthException catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMessage =
-            e.message; // Captura el mensaje de error de la excepción
+        _errorMessage = e.message;
       });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_errorMessage!), backgroundColor: Colors.red),
+      );
+    } on PostgrestException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _errorMessage = 'Error al crear el perfil: ${e.message}';
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_errorMessage!), backgroundColor: Colors.red),
+      );
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = 'Hubo un error al registrar';
+        _errorMessage = 'Error inesperado: $e';
       });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_errorMessage!), backgroundColor: Colors.red),
+      );
     } finally {
       if (mounted) setState(() => _loading = false);
     }

@@ -6,19 +6,28 @@ class NavigateTo {
   static void onboarding() {
     NavigateService.navigatorKey.currentContext?.go(AppRoutes.onboarding);
   }
+
   static void login() {
     NavigateService.navigatorKey.currentContext?.go(AppRoutes.login);
   }
+
   static void register() {
     NavigateService.navigatorKey.currentContext?.go(AppRoutes.register);
   }
+
   static void chat() {
     NavigateService.navigatorKey.currentContext?.go(AppRoutes.chat);
   }
+
   static void appointments() {
     NavigateService.navigatorKey.currentContext?.go(AppRoutes.appointments);
   }
+
   static void dashboard() {
     NavigateService.navigatorKey.currentContext?.go(AppRoutes.dashboard);
+  }
+
+  static void configuration() {
+    NavigateService.navigatorKey.currentContext?.go(AppRoutes.configuration);
   }
 }

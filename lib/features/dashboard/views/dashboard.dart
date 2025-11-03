@@ -3,6 +3,7 @@ import 'package:medical_app/app/constants/colors.dart';
 import 'package:medical_app/features/dashboard/widgets/card_action.dart';
 import 'package:medical_app/features/dashboard/widgets/section.dart';
 import 'package:medical_app/features/dashboard/widgets/today_medication.dart';
+import 'package:medical_app/app/constants/navigate.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -66,10 +67,7 @@ class _DashboardState extends State<Dashboard> {
               content: Text('Aquí van las próximas citas del usuario'),
             ),
             SizedBox(height: 16),
-            Section(
-              title: 'Medicación de Hoy',
-              content: TodayMedication(),
-            ),
+            Section(title: 'Medicación de Hoy', content: TodayMedication()),
             SizedBox(height: 16),
             Section(
               title: 'Historial Reciente',

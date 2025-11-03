@@ -7,6 +7,7 @@ import 'package:medical_app/features/auth/views/register.dart';
 import 'package:medical_app/features/chat/views/ChatPage.dart';
 import 'package:medical_app/features/dashboard/views/dashboard.dart';
 import 'package:medical_app/features/onboarding/views/onboardingPage.dart';
+import 'package:medical_app/features/configuration/configurationPage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -57,6 +58,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.dashboard,
       builder: (context, state) => const Dashboard(),
+    ),
+    GoRoute(
+      path: AppRoutes.configuration,
+      builder: (context, state) => const SettingsPage(),
     ),
   ],
 );

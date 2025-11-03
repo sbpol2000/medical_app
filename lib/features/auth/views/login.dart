@@ -44,24 +44,6 @@ class _LoginPageState extends State<LoginPage> {
       _loading = true;
       _errorMessage = null;
     });
-    //manejo de errores
-    // try {
-    //   // autentificacion
-    //   await Future.delayed(const Duration(seconds: 1));
-    //   if (!mounted) return;
-    //   NavigateTo.dashboard();
-    //   ScaffoldMessenger.of(
-    //     context,
-    //   ).showSnackBar(const SnackBar(content: Text('Inicio de sesión exitoso')));
-    // } catch (e) {
-    //   if (!mounted) return;
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('No se pudo iniciar sesión')),
-    //   );
-    // } finally {
-    //   if (mounted) setState(() => _loading = false);
-    // }
-
     try {
       final res = await _authRepository.signInWithEmail(
         email: _emailCtrl.text.trim(),
@@ -84,9 +66,15 @@ class _LoginPageState extends State<LoginPage> {
       // Errores de autenticación (credenciales inválidas, etc.)
       if (!mounted) return;
       setState(() => _errorMessage = e.message);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+
+      // Manejo específico: email no confirmado
+      if (e.message.toLowerCase().contains('email not confirmed')) {
+        _showEmailNotConfirmedDialog();
+      } else {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+      }
     } catch (e) {
       // Otros errores inesperados
       if (!mounted) return;
@@ -97,6 +85,58 @@ class _LoginPageState extends State<LoginPage> {
     } finally {
       if (mounted) setState(() => _loading = false);
     }
+  }
+
+  Future<void> _resendConfirmationEmail() async {
+    try {
+      await Supabase.instance.client.auth.resend(
+        type: OtpType.signup,
+        email: _emailCtrl.text.trim(),
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Correo de verificación reenviado. Revisa tu bandeja.'),
+        ),
+      );
+    } on AuthException catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.message)));
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No se pudo reenviar el correo.')),
+      );
+    }
+  }
+
+  void _showEmailNotConfirmedDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text('Email no confirmado'),
+          content: const Text(
+            'Debes confirmar tu correo antes de iniciar sesión. Revisa tu bandeja o reenvía el correo de verificación.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('Cerrar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+                _resendConfirmationEmail();
+              },
+              child: const Text('Reenviar correo'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   //validacion de campo email

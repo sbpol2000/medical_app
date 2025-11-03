@@ -21,12 +21,28 @@ class AuthRepository {
   Future<AuthResponse> signUpWithEmail({
     required String email,
     required String password,
+    Map<String, dynamic>? metadata,
   }) async {
     final response = await _supabaseClient.auth.signUp(
       email: email,
       password: password,
+      data: metadata, // Enviar metadata del usuario (nombre, etc.)
     );
     return response;
+  }
+
+  // Crear perfil del usuario
+  Future<void> createUserProfile({
+    required String userId,
+    required String name,
+    required String email,
+  }) async {
+    await _supabaseClient.from('profiles').insert({
+      'id': userId,
+      'name': name,
+      'email': email,
+      'created_at': DateTime.now().toIso8601String(),
+    });
   }
 
   // Cerrar sesión

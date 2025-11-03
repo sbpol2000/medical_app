@@ -6,4 +6,5 @@ class AppRoutes {
   static String register = '/register';
   static String appointments = '/appointments';
   static String dashboard = '/dashboard';
+  static String configuration = '/configuration';
 }
